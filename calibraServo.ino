@@ -47,15 +47,6 @@ controlServo csPinza(7,A5);
 
 void setup() 
 { 
-
-  //initialize servos
-  servoX.attach(ServoPinX, POS_MIN_X, POS_MAX_X);  // conectamos el servo en este pin
-  servoY.attach(ServoPinY, POS_MIN_Y, POS_MAX_Y);  // conectamos el servo en este pin
-
-  //use the writeMicroseconds to set the linear actuator to a default centered position
-  servoX.writeMicroseconds(servoValueX); 
-  servoY.writeMicroseconds(servoValueY); 
-
   Serial.begin(9600);
 } 
 
