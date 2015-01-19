@@ -52,48 +52,11 @@ void setup()
 
 void loop() 
 { 
-
-  /**************Servo Positions *******************************/
-  // leemos los valores del joystick
-   JSValueX = analogRead(JOY_PIN_X);
-   JSValueY = analogRead(JOY_PIN_Y);
- 
-   // solo actualizamos si estamos por encima de la zona central (para evitar vibraciones)
-   if(JSValueX > DEADBANDHIGH || JSValueX < DEADBANDLOW)
-   {
-     JSValueMappedX = map(JSValueX, 0, 1023, -speed, speed); //Mapeamos el valor del joystick (0 to 1023) a (-speed to speed)
-     int newValueX= servoValueX + JSValueMappedX; //add mapped joystick value to present Value
-     if((newValueX>POS_MIN_X) && (newValueX<POS_MAX_X))
-     {
-       if(newValueX!=servoValueX) // Solo actualizamos si es distinto. Si hay vibraciones podemos hacer un filtrado
-       {
-           servoValueX=newValueX;
-           //usamos writeMicroseconds para hacerlo más preciso
-           servoX.writeMicroseconds(servoValueX); 
-    
-           delay(10); // waits for the servo to get to they're position before continuing 
-           Serial.print("x:");
-           Serial.println(servoValueX);
-       }
-     }
-   }
-    
-  if(JSValueY > DEADBANDHIGH || JSValueY < DEADBANDLOW)
-   {
-     JSValueMappedY = map(JSValueY, 0, 1023, -speed, speed); //Mapeamos el valor del joystick (0 to 1023) a (-speed to speed)
-     int newValueY= servoValueY + JSValueMappedY; //add mapped joystick value to present Value
-     if((newValueY>POS_MIN_Y) && (newValueY<POS_MAX_Y))
-     {
-       if(newValueY!=servoValueY) // Solo actualizamos si es distinto. Si hay vibraciones podemos hacer un filtrado
-       {
-           servoValueY=newValueY;
-           //usamos writeMicroseconds para hacerlo más preciso
-           servoY.writeMicroseconds(servoValueY); 
-    
-           delay(10); // waits for the servo to get to they're position before continuing 
-           Serial.print("y:");
-           Serial.println(servoValueY);
-       }
-     }
-   }  
+  csCadera.checkControlSetServo();
+  csHombro.checkControlSetServo();
+  csPinza.checkControlSetServo();
+  csCodo.checkControlSetServo();
+  csMunecaY.checkControlSetServo();
+  csMunecaX.checkControlSetServo();
+  
 } 
