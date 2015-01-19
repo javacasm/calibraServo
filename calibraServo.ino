@@ -8,8 +8,8 @@ controlServo csCadera(12,A0);
 controlServo csHombro(11,A1);
 controlServo csCodo(10,A2);
 controlServo csMunecaX(9,A3);
-controlServo csMunecaY(8,A4);
-controlServo csPinza(7,A5);
+//controlServo csMunecaY(8,A4);
+//controlServo csPinza(7,A5);
 
 
 void setup() 
@@ -21,9 +21,9 @@ void loop()
 { 
   csCadera.checkControlSetServo();
   csHombro.checkControlSetServo();
-  csPinza.checkControlSetServo();
+  //csPinza.checkControlSetServo();
   csCodo.checkControlSetServo();
-  csMunecaY.checkControlSetServo();
+  //csMunecaY.checkControlSetServo();
   csMunecaX.checkControlSetServo();
   
 } 
