@@ -13,7 +13,7 @@ public:
 	{
 	    iPinControl=pinControl;
 	    iPinServo=pinServo;
-      	    iPOS_MIN=75;  //fully retracted
+      	iPOS_MIN=75;  //fully retracted
 	    iPOS_MAX=3200;
 
 	}
@@ -23,9 +23,10 @@ public:
 		servoValue=pos;
 		//usamos writeMicroseconds para hacerlo más preciso		
 		servo.writeMicroseconds(servoValue); 		
-        	delay(10); // waits for the servo to get to they're position before continuing 
-         	Serial.print("iPinServo:");
-        	Serial.println(servoValue);
+        delay(10); // waits for the servo to get to they're position before continuing 
+        Serial.print(iPinServo);
+        Serial.print(":");
+        Serial.println(servoValue);
 
 	}
 
@@ -38,17 +39,17 @@ public:
 
 
 
-      void checkControlSetServo() 
-      { 
+    void checkControlSetServo() 
+    { 
       
         /**************Servo Positions *******************************/
         // leemos los valores del joystick
-         JSValue = analogRead(iPinControl);
+        JSValue = analogRead(iPinControl);
          
        
-         // solo actualizamos si estamos por encima de la zona central (para evitar vibraciones)
-         if(JSValue > DEADBANDHIGH || JSValue < DEADBANDLOW)
-         {
+        // solo actualizamos si estamos por encima de la zona central (para evitar vibraciones)
+        if(JSValue > DEADBANDHIGH || JSValue < DEADBANDLOW)
+        {
            JSValueMapped = map(JSValue, 0, 1023, -speed, speed); //Mapeamos el valor del joystick (0 to 1023) a (-speed to speed)
            int newValue= servoValue + JSValueMapped; //add mapped joystick value to present Value
            if((newValue>iPOS_MIN) && (newValue<iPOS_MAX))
@@ -58,8 +59,9 @@ public:
                  setPosicion(newValue);
              }
            }
-         }
-       } 
+        }
+    }
+     
 protected:
 	// Ajuste de la zona central del joytstick para ajustar el 0
 	const static int DEADBANDLOW=482;   //decrease this value if drift occurs, increase it to increase sensitivity around the center position
@@ -81,11 +83,6 @@ protected:
 	int iPinServo; // Pin al que está conectado el servo
 
 	int iPinControl; // Pin analógico al que se conecta el control
-
-
-
-
-
 
 
 };

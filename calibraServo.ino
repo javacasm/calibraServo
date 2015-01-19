@@ -16,6 +16,9 @@ void setup()
 { 
   Serial.begin(9600);
   csCadera.inicializa();
+  csHombro.inicializa();
+  csCodo.inicializa();
+  csMunecaX.inicializa();
 } 
 
 void loop() 
