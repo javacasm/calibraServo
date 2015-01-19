@@ -6,8 +6,8 @@
 #include <Servo.h>
 
 //Defines
-#define ServoPinX 12         // Servo del eje Y
-#define ServoPinY 11         // Servo del eje X
+#define ServoPinX 11         // Servo del eje Y
+#define ServoPinY 10         // Servo del eje X
 
 #define JOY_PIN_X 0              // Joystick X Analog Pin
 #define JOY_PIN_Y 1              // Joystick Y Analog Pin
@@ -17,11 +17,11 @@
 #define DEADBANDHIGH 542  //increase this value if drift occurs, decrease it to increase sensitivity around the center position
 
 //max/min puse values in microseconds to send to the servo
-#define POS_MIN_X      575  //fully retracted
-#define POS_MAX_X      2200 //fully extended
+#define POS_MIN_X      75  //fully retracted
+#define POS_MAX_X      3200 //fully extended
 
-#define POS_MIN_Y      575  //fully retracted
-#define POS_MAX_Y      2200 //fully extended
+#define POS_MIN_Y      75  //fully retracted
+#define POS_MAX_Y      3200 //fully extended
 
 
 Servo servoX;    // servo X
