@@ -15,6 +15,7 @@ controlServo csMunecaX(9,A3);
 void setup() 
 { 
   Serial.begin(9600);
+  csCadera.inicializa();
 } 
 
 void loop() 

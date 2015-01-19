@@ -15,6 +15,7 @@ public:
 	    iPinServo=pinServo;
       	    iPOS_MIN=75;  //fully retracted
 	    iPOS_MAX=3200;
+
 	}
 
 	int setPosicion(int pos)
@@ -27,6 +28,15 @@ public:
         	Serial.println(servoValue);
 
 	}
+
+	void inicializa()
+	{
+		//initialize servos
+		servo.attach(iPinServo, iPOS_MIN, iPOS_MAX);  // conectamos el servo en este pin y establecemos los valores mínimo y máximo
+		setPosicion((iPOS_MAX+iPOS_MIN)/2);
+	}
+
+
 
       void checkControlSetServo() 
       { 
@@ -73,12 +83,6 @@ protected:
 	int iPinControl; // Pin analógico al que se conecta el control
 
 
-	void inicializa()
-	{
-		//initialize servos
-		servo.attach(iPinServo, iPOS_MIN, iPOS_MAX);  // conectamos el servo en este pin y establecemos los valores mínimo y máximo
-		setPosicion((iPOS_MAX+iPOS_MIN)/2);
-	}
 
 
 
