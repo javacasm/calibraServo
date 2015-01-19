@@ -10,7 +10,7 @@
 #define ServoPinY 11         // Servo del eje X
 
 #define JOY_PIN_X 0              // Joystick X Analog Pin
-#define JOY_PIN_Y 0              // Joystick Y Analog Pin
+#define JOY_PIN_Y 1              // Joystick Y Analog Pin
 
 //generic deadband limits - not all joystics will center at 512, so these limits remove 'drift' from joysticks that are off-center.
 #define DEADBANDLOW 482   //decrease this value if drift occurs, increase it to increase sensitivity around the center position
@@ -63,8 +63,8 @@ void loop()
    // solo actualizamos si estamos por encima de la zona central (para evitar vibraciones)
    if(JSValueX > DEADBANDHIGH || JSValueX < DEADBANDLOW)
    {
-     ValueMappedX = map(JSValueX, 0, 1023, -speed, speed); //Mapeamos el valor del joystick (0 to 1023) a (-speed to speed)
-     int newValueX= servoValueX + ValueMappedX; //add mapped joystick value to present Value
+     JSValueMappedX = map(JSValueX, 0, 1023, -speed, speed); //Mapeamos el valor del joystick (0 to 1023) a (-speed to speed)
+     int newValueX= servoValueX + JSValueMappedX; //add mapped joystick value to present Value
      if((newValueX>POS_MIN_X) && (newValueX<POS_MAX_X))
      {
        if(newValueX!=servoValueX) // Solo actualizamos si es distinto. Si hay vibraciones podemos hacer un filtrado
@@ -82,8 +82,8 @@ void loop()
     
   if(JSValueY > DEADBANDHIGH || JSValueY < DEADBANDLOW)
    {
-     ValueMappedY = map(JSValueY, 0, 1023, -speed, speed); //Mapeamos el valor del joystick (0 to 1023) a (-speed to speed)
-     int newValueY= servoValueY + ValueMappedY; //add mapped joystick value to present Value
+     JSValueMappedY = map(JSValueY, 0, 1023, -speed, speed); //Mapeamos el valor del joystick (0 to 1023) a (-speed to speed)
+     int newValueY= servoValueY + JSValueMappedY; //add mapped joystick value to present Value
      if((newValueY>POS_MIN_Y) && (newValueY<POS_MAX_Y))
      {
        if(newValueY!=servoValueY) // Solo actualizamos si es distinto. Si hay vibraciones podemos hacer un filtrado
