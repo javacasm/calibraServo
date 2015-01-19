@@ -1,8 +1,21 @@
+#include <Servo.h>
+
 // Calibrado de las posiciones de los servos
 // Basado en http://learn.robotgeek.com/demo-code/120-arduino-linear-actuator-tutorial-incremental-joystick-for-small-linear-actuator.html
 
-#include <Servo.h>
+class controlServo
+{
+public:
 
+	int iPinServo;
+	int iPinControl;
+	
+	controlServo(int pinServo,int pinControl)
+	{
+		iPinControl=pinControl;
+		iPinServo=pinServo;
+
+	}
 //Defines
 #define ServoPinX 11         // Servo del eje Y
 #define ServoPinY 10         // Servo del eje X
@@ -37,17 +50,8 @@ int servoValueY = (POS_MAX_Y+POS_MIN_Y)/2;   // posicion Y actual (empezamos con
 
 int speed = 5;        // velocidad a la que cambiamos la posición. Para hacerlo fino usar 1
 
-controlServo csCadera(12,A0);
-controlServo csHombro(11,A1);
-controlServo csCodo(10,A2);
-controlServo csMunecaX(9,A3);
-controlServo csMunecaY(8,A4);
-controlServo csPinza(7,A5);
-
-
 void setup() 
 { 
-
   //initialize servos
   servoX.attach(ServoPinX, POS_MIN_X, POS_MAX_X);  // conectamos el servo en este pin
   servoY.attach(ServoPinY, POS_MIN_Y, POS_MAX_Y);  // conectamos el servo en este pin
@@ -106,3 +110,5 @@ void loop()
      }
    }  
 } 
+
+};
