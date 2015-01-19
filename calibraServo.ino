@@ -33,9 +33,9 @@ int JSValueY;             // valor Y del joystick. Estará entre 0 and 1023
 int JSValueMappedX;        // Se convierte el valor X leido en el rango del servo
 int JSValueMappedY;        // Se convierte el valor Y leido en el rango del servo
 
-int LinearValueX = (POS_MAX_X+POS_MIN_X)/2;   // posicion X actual (empezamos con el valor medio)
+int servoValueX = (POS_MAX_X+POS_MIN_X)/2;   // posicion X actual (empezamos con el valor medio)
 
-int LinearValueY = (POS_MAX_Y+POS_MIN_Y)/2;   // posicion Y actual (empezamos con el valor medio)
+int servoValueY = (POS_MAX_Y+POS_MIN_Y)/2;   // posicion Y actual (empezamos con el valor medio)
 
 int speed = 5;        // velocidad a la que cambiamos la posición. Para hacerlo fino usar 1
 
@@ -43,9 +43,11 @@ void setup()
 { 
   //initialize servos
   servoX.attach(ServoPinX, POS_MIN_X, POS_MAX_X);  // conectamos el servo en este pin
+  servoY.attach(ServoPinY, POS_MIN_Y, POS_MAX_Y);  // conectamos el servo en este pin
 
   //use the writeMicroseconds to set the linear actuator to a default centered position
-  linearActuator.writeMicroseconds(LinearValue); 
+  servoX.writeMicroseconds(servoValueX); 
+  servoY.writeMicroseconds(servoValueY); 
 
   Serial.begin(9600);
 } 
@@ -54,26 +56,46 @@ void loop()
 { 
 
   /**************Servo Positions *******************************/
-  //read the values from the joystick
-   JSValue = analogRead(JOY_PIN);
+  // leemos los valores del joystick
+   JSValueX = analogRead(JOY_PIN_X);
+   JSValueY = analogRead(JOY_PIN_Y);
  
-   //only update if the joystick is outside the deadzone (i.e. moved oustide the center position)
-   if(JSValue > DEADBANDHIGH || JSValue < DEADBANDLOW)
+   // solo actualizamos si estamos por encima de la zona central (para evitar vibraciones)
+   if(JSValueX > DEADBANDHIGH || JSValueX < DEADBANDLOW)
    {
-     ValueMapped = map(JSValue, 0, 1023, speed, -speed); //Map analog value from native joystick value (0 to 1023) to incremental change (speed to -speed).
-     int newValue= LinearValue + ValueMapped; //add mapped joystick value to present Value
-     if((newValue>POS_MIN) && (newValue<POS_MAX))
+     ValueMappedX = map(JSValueX, 0, 1023, -speed, speed); //Mapeamos el valor del joystick (0 to 1023) a (-speed to speed)
+     int newValueX= servoValueX + ValueMappedX; //add mapped joystick value to present Value
+     if((newValueX>POS_MIN_X) && (newValueX<POS_MAX_X))
      {
-       if(newValue!=LinearValue)
+       if(newValueX!=servoValueX) // Solo actualizamos si es distinto. Si hay vibraciones podemos hacer un filtrado
        {
-           LinearValue=newValue;
-           //use the writeMicroseconds to set the servos to their new positions
-           linearActuator.writeMicroseconds(LinearValue); 
+           servoValueX=newValueX;
+           //usamos writeMicroseconds para hacerlo más preciso
+           servoX.writeMicroseconds(servoValueX); 
     
            delay(10); // waits for the servo to get to they're position before continuing 
-           Serial.println(LinearValue);
+           Serial.print("x:");
+           Serial.println(servoValueX);
        }
      }
    }
-      
+    
+  if(JSValueY > DEADBANDHIGH || JSValueY < DEADBANDLOW)
+   {
+     ValueMappedY = map(JSValueY, 0, 1023, -speed, speed); //Mapeamos el valor del joystick (0 to 1023) a (-speed to speed)
+     int newValueY= servoValueY + ValueMappedY; //add mapped joystick value to present Value
+     if((newValueY>POS_MIN_Y) && (newValueY<POS_MAX_Y))
+     {
+       if(newValueY!=servoValueY) // Solo actualizamos si es distinto. Si hay vibraciones podemos hacer un filtrado
+       {
+           servoValueY=newValueY;
+           //usamos writeMicroseconds para hacerlo más preciso
+           servoY.writeMicroseconds(servoValueY); 
+    
+           delay(10); // waits for the servo to get to they're position before continuing 
+           Serial.print("y:");
+           Serial.println(servoValueY);
+       }
+     }
+   }  
 } 
