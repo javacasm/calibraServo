@@ -1,3 +1,8 @@
 Calibrado fino de servos
-Se utilizan 2 servos en pines 11 y 12 controlados con un joystick analógico en los pines 0 y 1 (x,y)
+
+Se utiliza un joystick por cada 2 servos 
+La posicion del joystick define la velocidad del cambio
+
+También se puede usar un potenciómetro que se mapea al rango del servo
+
 
